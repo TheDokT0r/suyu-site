@@ -218,64 +218,62 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="cards" on:wheel={cardScroll}>
-	<div class="card-3d transition-left">
-		<Card {...cards[(instantSelectedCard + 1) % cards.length]} />
-	</div>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="card-3d left" on:click={() => go(-1)}>
-		<Card {...cards[selectedCard - 1 < 0 ? cards.length - 1 : selectedCard - 1]} />
-	</div>
-	<div class="card-3d">
-		<Card {...cards[selectedCard]} />
-	</div>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="card-3d right" on:click={() => go(1)}>
-		<Card {...cards[(selectedCard + 1) % cards.length]} />
-	</div>
-	<div class="card-3d transition-right">
-		<Card {...cards[(instantSelectedCard + 2) % cards.length]} />
+<div>
+	<div class="cards" on:wheel={cardScroll}>
+		<div class="card-3d transition-left">
+			<Card {...cards[(instantSelectedCard + 1) % cards.length]} />
+		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="card-3d left" on:click={() => go(-1)}>
+			<Card {...cards[selectedCard - 1 < 0 ? cards.length - 1 : selectedCard - 1]} />
+		</div>
+		<div class="card-3d">
+			<Card {...cards[selectedCard]} />
+		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="card-3d right" on:click={() => go(1)}>
+			<Card {...cards[(selectedCard + 1) % cards.length]} />
+		</div>
+		<div class="card-3d transition-right">
+			<Card {...cards[(instantSelectedCard + 2) % cards.length]} />
+		</div>
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	.cards {
 		display: flex;
 		max-width: 100%;
-	}
+		user-select: none;
 
-	.card-3d {
-		z-index: 3;
-	}
-
-	.card-3d.left {
-		transform: perspective(1000px) translateZ(-150px) rotateY(-50deg);
-		z-index: 2;
-	}
-
-	.card-3d.right {
-		transform: perspective(1000px) translateZ(-150px) rotateY(50deg);
-		z-index: 2;
-	}
-
-	.card-3d {
-		position: relative;
-	}
-
-	.card-3d.transition-left,
-	.card-3d.transition-right {
-		opacity: 0;
-		z-index: 1;
-		display: none;
-	}
-
-	@media (max-width: 560px) {
 		.card-3d {
-			transform: none !important;
+			z-index: 3;
+			position: relative;
 		}
 
-		.cards {
+		.left {
+			transform: perspective(1000px) translateZ(-150px) rotateY(-50deg);
+			z-index: 2;
+		}
+
+		.right {
+			transform: perspective(1000px) translateZ(-150px) rotateY(50deg);
+			z-index: 2;
+		}
+
+		.transition-left,
+		.transition-right {
+			opacity: 0;
+			z-index: 1;
+			display: none;
+		}
+
+		@media (max-width: 560px) {
+			.card-3d {
+				transform: none !important;
+			}
+
 			flex-direction: column;
 			gap: 24px;
 		}
